@@ -13,7 +13,22 @@ You must install [ripgrep](https://github.com/BurntSushi/ripgrep) to run this pr
 an instance of `ripgrep` each time it is used. To check if you have `ripgrep installed` type in the following command on
 your terminal and you should see a biiiig help message.
 
-> rg --help
+```bash
+rg --help
+``` 
+
+You should see something starting with this, and you're ready to go:
+
+> ripgrep 13.0.0
+> Andrew Gallant <jamslam@gmail.com>
+> 
+> ripgrep (rg) recursively searches the current directory for a regex pattern.
+> By default, ripgrep will respect gitignore rules and automatically skip hidden
+> files/directories and binary files.
+
+If you see something like "error" when typing the `rg --help` command, then you need to install ripgrep or found out what
+did happened with your rip grep installation (if you're running windows, did you install ripgrep in the same shell you are
+running this project? eg: bash shell, powershell, wsl, etc)
 
 
 

@@ -1,8 +1,12 @@
+use crate::tipo::Tipo;
+
 use std::fmt::{Display, Formatter, Result as FmtResult};
+// use std::fmt::{Display, Formatter, Result};
+// use std::fmt::{Display, Formatter};
 use std::collections::HashMap;
-use std::str::FromStr;
 
 mod io;
+mod tipo;
 
 pub struct Results {
     // pub data: Vec<String>,
@@ -75,33 +79,10 @@ impl Results {
     }
 }
 
-pub enum Type {
-    BEGIN, // los enum pueden contener data!!
-    MATCH,
-    END,
-    SUMMARY,
-}
-
-impl FromStr for Type {
-    type Err = TypeError;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "begin" => Ok(Self::BEGIN),
-            "match" => Ok(Self::MATCH),
-            "end" => Ok(Self::END),
-            "summary" => Ok(Self::SUMMARY),
-            _ => Err(TypeError)
-        }
-    }
-}
-
-pub struct TypeError;
-
 
 
 struct Match {
-    r#type: Type,
+    r#type: Tipo,
 }
 
 impl Display for Results {
@@ -113,8 +94,15 @@ impl Display for Results {
             // string.push_str("hola");
             // string.push_str("{}", d);
             // let num: String = d["type"].try_into().expect("String value");
-            let num: String = d["type"].to_string();
-            string.push_str(&num);
+            // let num: String = d["type"].to_string();
+            // let num: &str = &d["type"].to_string();
+            let num = &d["type"].to_string();
+            // let num: &str = d["type"];
+            let m: Tipo = num.parse()?;
+            // let m = num.parse()?;
+            // let m: Result<Tipo, _> = num.parse();
+            // let mm: Tipo = m?;
+            // string.push_str(&num);
         }
         // write!(f, "{}", *self.data)
         // write!(f, "asd")

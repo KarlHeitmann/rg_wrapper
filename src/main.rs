@@ -115,6 +115,7 @@ impl Display for Results {
             // let num: String = d["type"].try_into().expect("String value");
             let num: String = d["type"].to_string();
             string.push_str(&num);
+            let m: Type = num.parse()?;
         }
         // write!(f, "{}", *self.data)
         // write!(f, "asd")

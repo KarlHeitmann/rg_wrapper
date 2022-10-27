@@ -30,5 +30,8 @@ If you see something like "error" when typing the `rg --help` command, then you 
 did happened with your rip grep installation (if you're running windows, did you install ripgrep in the same shell you are
 running this project? eg: bash shell, powershell, wsl, etc)
 
+# RELATED PROJECTS
+
+[rg_wrapper_text_analysis](https://github.com/KarlHeitmann/rg_wrapper_text_analysis)
 
 

@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::collections::HashMap;
-
+use std::str::FromStr;
 
 mod io;
 
@@ -73,6 +73,35 @@ impl Results {
             data: js
         }
     }
+}
+
+pub enum Type {
+    BEGIN, // los enum pueden contener data!!
+    MATCH,
+    END,
+    SUMMARY,
+}
+
+impl FromStr for Type {
+    type Err = TypeError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "begin" => Ok(Self::BEGIN),
+            "match" => Ok(Self::MATCH),
+            "end" => Ok(Self::END),
+            "summary" => Ok(Self::SUMMARY),
+            _ => Err(TypeError)
+        }
+    }
+}
+
+pub struct TypeError;
+
+
+
+struct Match {
+    r#type: Type,
 }
 
 impl Display for Results {

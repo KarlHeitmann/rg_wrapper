@@ -1,10 +1,11 @@
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::collections::HashMap;
+use std::str::FromStr;
 
 
 mod io;
 
-pub struct Results {
+pub struct RgWrapper {
     // pub data: Vec<String>,
     pub data: Vec<json::JsonValue>,
     // pub data_json: Vec<String>
@@ -14,7 +15,7 @@ pub struct Results {
 
 /*
 // impl contiene las implementaciones, las funciones/métodos que tendrá la estructura
-impl Results {
+impl RgWrapper {
     pub fn new(data_raw: Vec<&str>) -> Self { // Self con mayusculas es un alias para nombre struct
     // pub fn new(data_raw: &str) -> Self { // Self con mayusculas es un alias para nombre struct
     // pub fn new(data_raw: String) -> Self { // Self con mayusculas es un alias para nombre struct
@@ -32,7 +33,7 @@ impl Results {
 }
 */
 
-impl Results {
+impl RgWrapper {
     pub fn new(data_raw: Vec<&str>) -> Self {
         let mut v: Vec<String> = vec![];
         // let mut js: Vec<String> = vec![];
@@ -75,7 +76,34 @@ impl Results {
     }
 }
 
-impl Display for Results {
+pub enum Tipo {
+    BEGIN, // los enum pueden contener data!!
+    MATCH,
+    END,
+    SUMMARY,
+}
+
+impl FromStr for Tipo {
+    type Err = TipoError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "begin" => Ok(Self::BEGIN),
+            "match" => Ok(Self::MATCH),
+            "end" => Ok(Self::END),
+            "summary" => Ok(Self::SUMMARY),
+            _ => Err(TipoError)
+        }
+    }
+}
+
+pub struct TipoError;
+
+struct Match {
+    tipo: Tipo,
+}
+
+impl Display for RgWrapper {
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
         // let mut s = String();
         let mut string = String::from("");
@@ -86,6 +114,7 @@ impl Display for Results {
             // let num: String = d["type"].try_into().expect("String value");
             let num: String = d["type"].to_string();
             string.push_str(&num);
+            let m: Tipo = num.parse()?;
         }
         // write!(f, "{}", *self.data)
         // write!(f, "asd")
@@ -105,7 +134,7 @@ fn main() {
     let results = io::run_command();
     println!("{}", results);
 
-    let r = Results::new(results.split("\n").collect::<Vec<&str>>());
+    let r = RgWrapper::new(results.split("\n").collect::<Vec<&str>>());
     println!("r: {}", r);
 
 }
